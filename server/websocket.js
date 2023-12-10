@@ -15,6 +15,21 @@ router.ws('/test', (ws, req) => {
     }, 1000);
 
     ws.on('message', msg => {
+        if (msg === 'close') {
+            ws.close();
+        }
+        if (msg === 'pause') {
+            clearInterval(interval);
+        }
+        if (msg === 'start') {
+            interval = setInterval(() => {
+                if (ws.readyState === ws.OPEN) {
+                    ws.send(Math.random().toFixed(2));
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
         ws.send(msg);
     });
 });

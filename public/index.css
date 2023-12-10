@@ -32,3 +32,19 @@
     padding: 5px 10px;
     cursor: pointer;
 }
+
+.websocket.red {
+    background-color: red;
+}
+.websocket.blue {
+    background-color: blue;
+}
+.flex {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}

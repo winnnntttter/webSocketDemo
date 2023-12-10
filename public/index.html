@@ -9,18 +9,28 @@
 
 <body>
   <div id="app">
-    <div class="websocket">
+    <div v-if="pageType === 'normal'" class="websocket">
       <div class="receive">
         <p>服务端返回的消息</p>
         <div id="receive-box"></div>
       </div>
-      <div class="send">
-        <textarea type="text" id="msg-need-send"></textarea>
+      <!-- <div class="send">
+        <textarea type="text" id="msg-need-send" @keyup="enterMsg"></textarea>
         <p>
           <button id="send-btn" @click="sendMsg">点击发消息给服务端</button>
         </p>
       </div>
-      <button id="exit" @click="close">关闭连接</button>
+      <button id="exit" @click="close">关闭连接</button> -->
+    </div>
+    <div v-else-if="pageType === 'red'" class="websocket red">
+      <div class="flex red">
+        从后台接到消息，让第一页变成全红
+      </div>
+    </div>
+    <div v-else-if="pageType === 'blue'" class="websocket blue">
+      <div class="flex blue">
+        从后台接到消息，让第一页变成全蓝
+      </div>
     </div>
   </div>
 
@@ -37,10 +47,15 @@
     const app = Vue.createApp({
       data() {
         return {
-          msg: 'Hello Vue!'
+          pageType: 'normal'
         };
       },
       methods: {
+        enterMsg(e) {
+          if (e.keyCode === 13) {
+            this.sendMsg();
+          }
+        },
         sendMsg() {
           const msg = document.getElementById('msg-need-send').value;
           if (!msg) {
@@ -54,6 +69,7 @@
         }
       },
       mounted() {
+        const _this = this;
         const receiveBox = document.getElementById('receive-box');
         ws.onmessage = e => {
           receiveBox.innerHTML += `<p>${e.data}</p>`;
@@ -61,6 +77,11 @@
             top: receiveBox.scrollHeight,
             behavior: 'smooth'
           });
+          if (e.data === 'red') {
+            _this.pageType = 'red';
+          } else if (e.data === 'blue') {
+            _this.pageType = 'blue';
+          }
         };
       },
     });
