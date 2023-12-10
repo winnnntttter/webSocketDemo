@@ -34,7 +34,18 @@
     const app = Vue.createApp({
       methods: {
         sendChange(msg) {
-          ws.send(msg);
+          // ws.send(msg);
+          fetch('http://127.0.0.1:3000/websocket/test', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              msg
+            })
+          }).then(res => res.json()).then(res => {
+            console.log(res);
+          });
         },
         close() {
           ws.close();

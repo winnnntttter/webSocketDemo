@@ -34,9 +34,11 @@
 }
 
 .websocket.red {
+    color: #fff;
     background-color: red;
 }
 .websocket.blue {
+    color: #fff;
     background-color: blue;
 }
 .flex {

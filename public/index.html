@@ -72,6 +72,7 @@
         const _this = this;
         const receiveBox = document.getElementById('receive-box');
         ws.onmessage = e => {
+          console.log('服务端返回的消息', e.data);
           receiveBox.innerHTML += `<p>${e.data}</p>`;
           receiveBox.scrollTo({
             top: receiveBox.scrollHeight,
